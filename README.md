@@ -1,76 +1,98 @@
-# AI HealthGuard - Multi-Disease Prediction System
+# HealthGuard — ML Inference Demo 🧠
 
-A small, end-to-end ML demo that predicts potential health risks (Diabetes, Heart Disease) from basic patient vitals. It’s built to show the full workflow—data generation, model training, and a simple web UI—not to replace clinical judgment.
+An end-to-end machine-learning demo that trains a Random Forest classifier on **synthetic health data**, exposes predictions through Flask, and provides a simple browser UI.
 
-## Project Overview
-I used a Random Forest classifier and handled class imbalance with SMOTE. The app exposes a lightweight Flask endpoint and a simple HTML form so you can try predictions quickly.
+> **Important:** this is a software/ML portfolio project. The dataset is synthetic and the predictions are not medical advice or a clinical diagnostic system.
 
-### Highlights
-- **Solid baseline performance**: ~87% accuracy on held‑out data.
-- **Imbalance handling**: SMOTE helped improve recall for minority classes.
-- **Practical latency**: Inference runs in a few milliseconds on a local machine.
-- **Simple API + UI**: A clean Flask endpoint and a minimal form for testing.
+## 🔍 What the project demonstrates
 
-## Project Structure
+- Synthetic dataset generation (5,000 samples)
+- Random Forest classification
+- Class-imbalance handling with SMOTE
+- Model training and evaluation pipeline
+- Flask inference API
+- Browser-based prediction form
+- Basic inference latency and load testing
+
+## 🧱 Architecture
+
+```text
+Synthetic Data
+      │
+      ▼
+Training + SMOTE
+      │
+      ▼
+Random Forest Model
+      │
+      ▼
+Flask API ───► HTML UI
 ```
-AI_HealthGuard_System/
-├── data/
-│   └── medical_data.csv       # Generated synthetic dataset (5000 samples)
-├── models/
-│   └── model.pkl              # Trained Random Forest model
+
+## 📊 Reported results
+
+Results documented for the current project run:
+
+- Accuracy: approximately **87%**
+- Recall: approximately **62% → 79%** after applying SMOTE
+- Single prediction latency: a few milliseconds on the author's local machine
+
+These figures are project-specific measurements on synthetic data and should not be interpreted as clinical performance.
+
+## 🛠️ Tech Stack
+
+**Language:** Python  
+**ML:** Scikit-learn, Random Forest, imbalanced-learn / SMOTE  
+**API:** Flask  
+**UI:** HTML/CSS  
+**Testing:** Python load-testing script
+
+## 📁 Project Structure
+
+```text
+Health_Guard/
+├── data/                  # Synthetic dataset
+├── models/                # Trained model + metrics
 ├── src/
-│   ├── generate_data.py       # Data simulation script
-│   └── train_model.py         # Training, SMOTE, and Evaluation pipeline
+│   ├── generate_data.py
+│   └── train_model.py
 ├── templates/
-│   └── index.html             # Web Interface
-├── app.py                     # Flask API Application
-├── test_load.py               # Load testing script
-└── requirements.txt           # Dependencies
+│   └── index.html
+├── app.py
+├── test_load.py
+├── requirements.txt
+└── interview_guide.md
 ```
 
-## Setup & Installation
+## 🚀 Run locally
 
-1. **Clone the repository** (or extract files).
-2. **Install Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+### Install
 
-## How to Run
+```bash
+pip install -r requirements.txt
+```
 
-### 1. Generate Data & Train Model
-If you want to regenerate data or retrain the model:
+### Generate data and train
+
 ```bash
 python src/generate_data.py
 python src/train_model.py
 ```
-Output prints metrics and a quick latency check.
 
-### 2. Start the Application
+### Start the API/UI
+
 ```bash
 python app.py
 ```
-The application will start at `http://127.0.0.1:5000`.
 
-### 3. Usage
-- Open your browser to `http://127.0.0.1:5000`.
-- Enter patient details (Age, BMI, BP, etc.).
-- Click **Analyze Health Risk**.
+Then open the local address printed by Flask.
 
-### 4. Load Testing (Optional)
-If you want a quick concurrency check (10 simulated users):
+### Optional load test
+
 ```bash
 python test_load.py
 ```
 
-## Results (from this run)
-- **Accuracy**: ~87% (5‑fold cross‑validation).
-- **Recall**: Improved from baseline ~62% to ~79% with SMOTE.
-- **Latency**: Single prediction around a few milliseconds on my machine.
+## 📌 Engineering improvements to pursue
 
-### Notes & References
-- [Training & Performance metrics](models/performance_metrics.txt)
-- [Interview Preparation Guide](interview_guide.md)
-
----
-*Portfolio demo project. The dataset is synthetic and outputs are not medical advice.*
+For a production-oriented version, the next steps would be automated tests, request validation, model/version tracking, structured logging, containerization and CI for training/inference checks.
